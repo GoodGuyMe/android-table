@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">TableApp</string>
+    <string name="welcome_text">Hello!</string>
+    <string name="buttonOn">ON</string>
+</resources>
