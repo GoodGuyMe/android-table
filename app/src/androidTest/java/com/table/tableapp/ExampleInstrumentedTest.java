@@ -1,4 +1,4 @@
-package com.example.tableapp;
+package com.table.tableapp;
 
 import android.content.Context;
 import androidx.test.platform.app.InstrumentationRegistry;
@@ -20,6 +20,6 @@ public class ExampleInstrumentedTest {
     public void useAppContext() {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        assertEquals("com.example.tableapp", appContext.getPackageName());
+        assertEquals("com.table.tableapp", appContext.getPackageName());
     }
 }
