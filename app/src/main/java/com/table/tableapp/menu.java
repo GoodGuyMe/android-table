@@ -1,7 +1,6 @@
 package com.table.tableapp;
 
 import android.os.Bundle;
-import android.view.View;
 import android.widget.SeekBar;
 import androidx.appcompat.widget.AppCompatSeekBar;
 import androidx.appcompat.widget.SwitchCompat;
@@ -35,7 +34,7 @@ public class menu extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow).setOpenableLayout(drawer)
+                R.id.nav_home, R.id.nav_color, R.id.nav_speed).setOpenableLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
@@ -49,7 +48,6 @@ public class menu extends AppCompatActivity {
 
         @Override
         public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-            // updated continuously as the user slides the thumb
             if (System.currentTimeMillis() >= time + delay) {
                 time = System.currentTimeMillis();
                 int value = (int) (Math.pow(progress, 2) / 255);
@@ -59,7 +57,6 @@ public class menu extends AppCompatActivity {
 
         @Override
         public void onStartTrackingTouch(SeekBar seekBar) {
-            // called when the user first touches the SeekBar
         }
 
         @Override

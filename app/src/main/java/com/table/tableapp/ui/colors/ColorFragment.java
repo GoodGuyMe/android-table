@@ -20,8 +20,8 @@ public class ColorFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         colorViewModel =
                 ViewModelProviders.of(this).get(ColorViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_gallery, container, false);
-        final TextView textView = root.findViewById(R.id.text_gallery);
+        View root = inflater.inflate(R.layout.fragment_color, container, false);
+        final TextView textView = root.findViewById(R.id.text_color);
         colorViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {

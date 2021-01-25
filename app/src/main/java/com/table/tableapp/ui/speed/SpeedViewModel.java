@@ -1,16 +1,16 @@
-package com.table.tableapp.ui.slideshow;
+package com.table.tableapp.ui.speed;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class SlideshowViewModel extends ViewModel {
+public class SpeedViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
 
-    public SlideshowViewModel() {
+    public SpeedViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is slideshow fragment");
+        mText.setValue("SPEEEEEEEED!");
     }
 
     public LiveData<String> getText() {
