@@ -1,17 +1,11 @@
 package com.table.tableapp.ui.home;
 
-import android.graphics.Color;
-import android.graphics.LinearGradient;
-import android.graphics.Shader;
-import android.graphics.drawable.GradientDrawable;
-import android.graphics.drawable.TransitionDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import com.table.tableapp.R;
