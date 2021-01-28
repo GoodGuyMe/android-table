@@ -7,57 +7,58 @@
     android:clickable="false"
     tools:context=".ui.home.HomeFragment">
 
-    <ImageButton
+    <Button
         android:id="@+id/rainbow"
         android:layout_width="@dimen/square_button_size"
         android:layout_height="@dimen/square_button_size"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="32dp"
-        android:contentDescription="@string/glitter"
+        android:layout_marginStart="@dimen/button_separation_distance"
+        android:layout_marginTop="@dimen/button_separation_distance"
+        android:layout_marginEnd="@dimen/button_horizontal_separation"
+        android:layout_marginBottom="@dimen/button_separation_distance"
+        android:contentDescription="@string/rainbow"
+        android:text="@string/rainbow"
         app:layout_constraintBottom_toTopOf="@+id/loop"
         app:layout_constraintEnd_toStartOf="@+id/solid"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/glitter" />
 
-    <ImageButton
+    <Button
         android:id="@+id/loop"
         android:layout_width="@dimen/square_button_size"
         android:layout_height="@dimen/square_button_size"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginStart="@dimen/button_separation_distance"
+        android:layout_marginTop="@dimen/button_separation_distance"
+        android:layout_marginEnd="@dimen/button_horizontal_separation"
         android:layout_marginBottom="150dp"
-        android:background="#00FFFFFF"
-        android:contentDescription="@string/glitter"
-        android:src="@drawable/loop_background"
+        android:contentDescription="@string/loop"
+        android:text="@string/loop"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/extra"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/rainbow" />
 
-    <ImageButton
+    <Button
         android:id="@+id/solid"
         android:layout_width="@dimen/square_button_size"
         android:layout_height="@dimen/square_button_size"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="32dp"
-        android:contentDescription="@string/rain"
+        android:layout_marginStart="@dimen/button_horizontal_separation"
+        android:layout_marginTop="@dimen/button_separation_distance"
+        android:layout_marginEnd="@dimen/button_separation_distance"
+        android:layout_marginBottom="@dimen/button_separation_distance"
+        android:contentDescription="@string/solid"
+        android:text="@string/solid"
         app:layout_constraintBottom_toTopOf="@+id/extra"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/rainbow"
         app:layout_constraintTop_toBottomOf="@+id/rain" />
 
-    <ImageButton
+    <Button
         android:id="@+id/extra"
         android:layout_width="@dimen/square_button_size"
         android:layout_height="@dimen/square_button_size"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="32dp"
+        android:layout_marginStart="@dimen/button_horizontal_separation"
+        android:layout_marginTop="@dimen/button_separation_distance"
+        android:layout_marginEnd="@dimen/button_separation_distance"
         android:layout_marginBottom="150dp"
         android:contentDescription="@string/rain"
         android:visibility="invisible"
@@ -70,9 +71,9 @@
         android:id="@+id/text_home"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="@dimen/button_horizontal_separation"
         android:layout_marginTop="?attr/actionBarSize"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="@dimen/button_horizontal_separation"
         android:textAlignment="center"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -82,29 +83,31 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.025" />
 
-    <ImageButton
+    <Button
         android:id="@+id/glitter"
         android:layout_width="@dimen/square_button_size"
         android:layout_height="@dimen/square_button_size"
-        android:layout_marginStart="32dp"
+        android:layout_marginStart="@dimen/button_separation_distance"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginEnd="@dimen/button_horizontal_separation"
+        android:layout_marginBottom="@dimen/button_separation_distance"
         android:contentDescription="@string/glitter"
+        android:text="@string/glitter"
         app:layout_constraintBottom_toTopOf="@+id/rainbow"
         app:layout_constraintEnd_toStartOf="@+id/rain"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_home" />
 
-    <ImageButton
+    <Button
         android:id="@+id/rain"
         android:layout_width="@dimen/square_button_size"
         android:layout_height="@dimen/square_button_size"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="@dimen/button_horizontal_separation"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginEnd="@dimen/button_separation_distance"
+        android:layout_marginBottom="@dimen/button_separation_distance"
         android:contentDescription="@string/rain"
+        android:text="@string/rain"
         app:layout_constraintBottom_toTopOf="@+id/solid"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/glitter"

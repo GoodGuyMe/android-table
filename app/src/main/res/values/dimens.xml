@@ -6,4 +6,9 @@
     <dimen name="nav_header_height">196dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="square_button_size">125dp</dimen>
+    <dimen name="button_start_from_top">30dp</dimen>
+    <dimen name="button_side_margin">75dp</dimen>
+    <dimen name="button_top_margin">10dp</dimen>
+    <dimen name="button_separation_distance">32dp</dimen>
+    <dimen name="button_horizontal_separation">8dp</dimen>
 </resources>

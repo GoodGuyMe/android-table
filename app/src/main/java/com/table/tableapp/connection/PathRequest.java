@@ -15,7 +15,7 @@ import org.json.JSONObject;
 
 public class PathRequest {
     private RequestQueue queue;
-    private static final String host = "http://192.168.2.5/";
+    public static final String host = "http://192.168.2.5/";
 
     public PathRequest(Context cont) {
         queue = Volley.newRequestQueue(cont);
@@ -26,7 +26,7 @@ public class PathRequest {
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, response -> {
             // Do nothing with the response :)
         }, error -> {
-            // Can't connect to table!
+            // Can't connect to table! Might add a snackbar
         });
         queue.add(stringRequest);
     }

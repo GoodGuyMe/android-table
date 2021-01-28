@@ -1,12 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/color_fragment_two"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="@string/colorTab2"
-        android:textSize="36sp" />
+    android:layout_height="match_parent"
+    android:paddingTop="?attr/actionBarSize">
+
+    <RelativeLayout
+        android:id="@+id/edit_button_holder"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingStart="0dp"
+        android:paddingTop="0dp"
+        android:paddingEnd="0dp">
+
+        <Button
+            android:id="@+id/hue_light"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="@dimen/button_side_margin"
+            android:layout_marginTop="@dimen/button_top_margin"
+            android:layout_marginEnd="@dimen/button_side_margin" />
+    </RelativeLayout>
 
 </RelativeLayout>

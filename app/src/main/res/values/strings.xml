@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">TableApp</string>
     <string name="welcome_text">Hello!</string>
-    <string name="title_activity_menu">menu</string>
+    <string name="title_activity_menu">Table</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Android Studio</string>
@@ -19,7 +19,10 @@
     <string name="colorTab1">Add</string>
     <string name="colorTab2">Update</string>
     <string name="colorTab3">Delete</string>
-    <string name="confirm">confirm</string>
-    <string name="cancel">cancel</string>
+    <string name="confirm">Confirm</string>
+    <string name="cancel">Cancel</string>
     <string name="colorPickerTitle">Set Color</string>
+    <string name="loop">Loop</string>
+    <string name="rainbow">Rainbow</string>
+    <string name="solid">Solid</string>
 </resources>
