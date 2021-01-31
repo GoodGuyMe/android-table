@@ -11,15 +11,18 @@ import com.skydoves.colorpickerview.ColorEnvelope;
 import com.skydoves.colorpickerview.ColorPickerDialog;
 import com.skydoves.colorpickerview.listeners.ColorEnvelopeListener;
 import com.table.tableapp.R;
+import com.table.tableapp.connection.PathRequest;
 
 public class Tab1Fragment extends ColorFragment {
 
+    private PathRequest pr;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_one, container, false);
+        View root = inflater.inflate(R.layout.fragment_color_one, container, false);
         Button addColor = root.findViewById(R.id.addColorButton);
         addColor.setOnClickListener((V) -> createBuilder(root.getContext()).show());
-
+        pr = new PathRequest(root.getContext());
         return root;
     }
 

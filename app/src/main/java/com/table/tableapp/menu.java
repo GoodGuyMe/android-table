@@ -13,15 +13,12 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import com.table.tableapp.connection.PathRequest;
+import com.table.tableapp.connection.SeekBarWrapper;
 
 public class menu extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private PathRequest pr;
-
-    // minimum delay between request
-    private static final long delay = 20;
-    private long time = System.currentTimeMillis();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,8 +31,9 @@ public class menu extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_color, R.id.nav_speed).setOpenableLayout(drawer)
-                .build();
+                R.id.nav_home, R.id.nav_color, R.id.nav_speed
+        ).setOpenableLayout(drawer).build();
+
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
@@ -44,34 +42,23 @@ public class menu extends AppCompatActivity {
 
     }
 
-    AppCompatSeekBar.OnSeekBarChangeListener seekBarChangeListener = new AppCompatSeekBar.OnSeekBarChangeListener() {
-
-        @Override
-        public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-            if (System.currentTimeMillis() >= time + delay) {
-                time = System.currentTimeMillis();
-                int value = (int) (Math.pow(progress, 2) / 255);
-                pr.makeStringRequest("brightness/?b=" + value);
-            }
-        }
-
-        @Override
-        public void onStartTrackingTouch(SeekBar seekBar) {
-        }
-
-        @Override
-        public void onStopTrackingTouch(SeekBar seekBar) {
-            int value = (int)(Math.pow(seekBar.getProgress(), 2) / 255);
-            pr.makeStringRequest("brightness/?b=" + value);
-        }
-    };
-
     @Override
     public boolean onSupportNavigateUp() {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
 
-        AppCompatSeekBar seekBar = findViewById(R.id.brightnessSlider);
-        seekBar.setOnSeekBarChangeListener(seekBarChangeListener);
+        ((AppCompatSeekBar)findViewById(R.id.brightnessSlider)).setOnSeekBarChangeListener(
+                pr.createSeekBarChangeListener("brightness", "b", new SeekBarWrapper() {
+                    @Override
+                    public int convert(int value) {
+                        return (int)(Math.pow(value, 2) / 255);
+                    }
+
+                    @Override
+                    public void setText(Integer value) {
+                        // Don't set any text! :O
+                    }
+                })
+        );
 
         SwitchCompat onSwitch = findViewById(R.id.onSwitch);
         onSwitch.setOnClickListener(v -> {

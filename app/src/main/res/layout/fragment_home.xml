@@ -33,7 +33,7 @@
         android:contentDescription="@string/loop"
         android:text="@string/loop"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/extra"
+        app:layout_constraintEnd_toStartOf="@+id/snake"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/rainbow" />
 
@@ -47,21 +47,21 @@
         android:layout_marginBottom="@dimen/button_separation_distance"
         android:contentDescription="@string/solid"
         android:text="@string/solid"
-        app:layout_constraintBottom_toTopOf="@+id/extra"
+        app:layout_constraintBottom_toTopOf="@+id/snake"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/rainbow"
         app:layout_constraintTop_toBottomOf="@+id/rain" />
 
     <Button
-        android:id="@+id/extra"
+        android:id="@+id/snake"
         android:layout_width="@dimen/square_button_size"
         android:layout_height="@dimen/square_button_size"
         android:layout_marginStart="@dimen/button_horizontal_separation"
         android:layout_marginTop="@dimen/button_separation_distance"
         android:layout_marginEnd="@dimen/button_separation_distance"
         android:layout_marginBottom="150dp"
-        android:contentDescription="@string/rain"
-        android:visibility="invisible"
+        android:contentDescription="@string/snake"
+        android:text="@string/snake"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/loop"

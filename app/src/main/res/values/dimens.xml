@@ -11,4 +11,5 @@
     <dimen name="button_top_margin">10dp</dimen>
     <dimen name="button_separation_distance">32dp</dimen>
     <dimen name="button_horizontal_separation">8dp</dimen>
+    <dimen name="inner_slider_distance">25dp</dimen>
 </resources>

@@ -25,7 +25,7 @@ public class ColorFragment extends Fragment {
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private View root;
-    protected static PathRequest pr;
+    protected PathRequest pr;
     protected static ArrayList<Integer> colors;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -57,7 +57,7 @@ public class ColorFragment extends Fragment {
                         (dialogInterface, i) -> dialogInterface.dismiss())
                 .attachAlphaSlideBar(false) // the default value is true.
                 .attachBrightnessSlideBar(true)  // the default value is true.
-                .setBottomSpace(12); // set a bottom space between the last slidebar and buttons.
+                .setBottomSpace(12); // set a bottom space between the last slide bar and buttons.
 
         ColorPickerView colorPickerView = builder.getColorPickerView();
         BubbleFlag bubbleFlag = new BubbleFlag(context);

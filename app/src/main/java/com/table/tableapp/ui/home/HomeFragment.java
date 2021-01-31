@@ -24,11 +24,12 @@ public class HomeFragment extends Fragment {
         homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
 
         PathRequest pr = new PathRequest(root.getContext());
-        pr.setupOnClickStringRequest(root.findViewById(R.id.glitter), "mode?m=glitter");
-        pr.setupOnClickStringRequest(root.findViewById(R.id.loop), "mode?m=all");
-        pr.setupOnClickStringRequest(root.findViewById(R.id.solid), "mode?m=solid");
-        pr.setupOnClickStringRequest(root.findViewById(R.id.rainbow), "mode?m=rainbow");
-        pr.setupOnClickStringRequest(root.findViewById(R.id.rain), "mode?m=rain");
+        root.findViewById(R.id.glitter).setOnClickListener(V -> pr.makeStringRequest("mode?m=glitter"));
+        root.findViewById(R.id.loop).setOnClickListener(V -> pr.makeStringRequest("mode?m=all"));
+        root.findViewById(R.id.solid).setOnClickListener(V -> pr.makeStringRequest("mode?m=solid"));
+        root.findViewById(R.id.rainbow).setOnClickListener(V -> pr.makeStringRequest("mode?m=rainbow"));
+        root.findViewById(R.id.rain).setOnClickListener(V -> pr.makeStringRequest("mode?m=rain"));
+        root.findViewById(R.id.rain).setOnClickListener(V -> pr.makeStringRequest("mode?m=snakeAI"));
 
         return root;
     }

@@ -1,28 +1,37 @@
 <resources>
-    <string name="app_name">TableApp</string>
-    <string name="welcome_text">Hello!</string>
+    <string name="app_name">RGB Table</string>
     <string name="title_activity_menu">Table</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_title">Table Application</string>
+    <string name="nav_header_subtitle">For the best table :)</string>
     <string name="nav_header_desc">Navigation header</string>
-    <string name="action_settings">Settings</string>
 
     <string name="menu_home">Modes</string>
     <string name="menu_color">Colors</string>
     <string name="menu_speed">Speed</string>
+
     <string name="buttonOff">OFF</string>
     <string name="buttonOn">ON</string>
-    <string name="glitter">Glitter</string>
-    <string name="rain">Rain</string>
+
     <string name="colorTab1">Add</string>
     <string name="colorTab2">Update</string>
     <string name="colorTab3">Delete</string>
     <string name="confirm">Confirm</string>
     <string name="cancel">Cancel</string>
     <string name="colorPickerTitle">Set Color</string>
+
     <string name="loop">Loop</string>
     <string name="rainbow">Rainbow</string>
     <string name="solid">Solid</string>
+    <string name="snake">Snake</string>
+    <string name="glitter">Glitter</string>
+    <string name="rain">Rain</string>
+
+    <string name="fps">FPS</string>
+    <string name="speed">Speed</string>
+    <string name="fade">Fade</string>
+    <string name="freq">Frequency</string>
+    <string name="add_color">Add Color</string>
+    <string name="color_presets">Presets</string>
 </resources>
