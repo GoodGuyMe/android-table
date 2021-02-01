@@ -33,5 +33,16 @@
         android:textAlignment="center"
         android:textSize="20sp" />
 
+    <Button
+        android:id="@+id/add_color_rainbow"
+        android:layout_width="@dimen/square_button_size"
+        android:layout_height="@dimen/square_button_size"
+        android:layout_below="@+id/text_color_presets"
+        android:layout_marginStart="@dimen/button_separation_distance"
+        android:layout_marginTop="@dimen/inner_slider_distance"
+        android:contentDescription="@string/glitter"
+        android:text="@string/rainbow"
+        app:layout_constraintStart_toStartOf="parent" />
+
 
 </RelativeLayout>

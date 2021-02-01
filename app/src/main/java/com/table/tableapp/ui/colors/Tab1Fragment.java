@@ -22,6 +22,9 @@ public class Tab1Fragment extends ColorFragment {
         View root = inflater.inflate(R.layout.fragment_color_one, container, false);
         Button addColor = root.findViewById(R.id.addColorButton);
         addColor.setOnClickListener((V) -> createBuilder(root.getContext()).show());
+
+        Button addRainbow = root.findViewById(R.id.add_color_rainbow);
+        addRainbow.setOnClickListener((V) -> pr.makeStringRequest("color?new=true&rgb=true"));
         pr = new PathRequest(root.getContext());
         return root;
     }
