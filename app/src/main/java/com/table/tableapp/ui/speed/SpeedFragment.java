@@ -141,7 +141,7 @@ public class SpeedFragment extends Fragment {
                 }
                 fps_slider.setProgress(response.getInt("fps") - 1);
                 fade_slider.setProgress((int)(Math.sqrt(response.getInt("fade")) * Math.sqrt(freq_slider.getMax())));
-                //TODO: delta_slider.setProgress(response.getInt("delta"));
+                delta_slider.setProgress(response.getInt("delta"));
             } catch (JSONException e) {
                 // JSON Parsing error
             }
