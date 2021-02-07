@@ -115,11 +115,12 @@ public class PathRequest {
         return button;
     }
 
-    public void clearColors() {
+    public void setNewColors(SetNewColorsWrapper wrapper) {
         makeJsonArrayRequest("getColorsArray", response -> {
             for (int i = 0; i < response.length(); i++) {
                 makeStringRequest("color?del=true&id=" + 0);
             }
         });
+        wrapper.addNewColors();
     }
 }

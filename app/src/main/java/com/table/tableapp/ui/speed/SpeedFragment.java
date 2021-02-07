@@ -144,6 +144,7 @@ public class SpeedFragment extends Fragment {
                 delta_slider.setProgress(response.getInt("delta"));
             } catch (JSONException e) {
                 // JSON Parsing error
+                e.printStackTrace();
             }
         });
 
