@@ -59,8 +59,6 @@ public class PresetsFragment extends Fragment {
         View button = root.findViewById(R.id.add_preset_button);
         button.setOnClickListener(view -> {
             pr.makeJsonRequest("getCurrentPreset", response -> {
-                //TODO: Let user input a string for the title
-
                 // Create alert dialog to show a text field.
                 AlertDialog.Builder builder = new AlertDialog.Builder(root.getContext());
                 builder.setTitle("Set a name");
@@ -71,6 +69,7 @@ public class PresetsFragment extends Fragment {
                     try {
                         String title = input.getText().toString();
                         response.put("title", title);
+                        //TODO: Let user pick button color
                         JSONArray jsonArr;
                         try {
                             jsonArr = getPresetFromFile();
@@ -85,7 +84,6 @@ public class PresetsFragment extends Fragment {
                         FileOutputStream fOut = new FileOutputStream(presets);
                         fOut.write(jsonArr.toString().getBytes(StandardCharsets.UTF_8));
                         fOut.close();
-                        System.out.println(jsonArr);
                     } catch (JSONException | IOException e) {
                         e.printStackTrace();
                     }
