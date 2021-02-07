@@ -10,6 +10,7 @@
     <string name="menu_home">Modes</string>
     <string name="menu_color">Colors</string>
     <string name="menu_speed">Speed</string>
+    <string name="menu_preset">Presets</string>
 
     <string name="buttonOff">OFF</string>
     <string name="buttonOn">ON</string>
@@ -34,4 +35,6 @@
     <string name="freq">Frequency</string>
     <string name="add_color">Add Color</string>
     <string name="color_presets">Presets</string>
+    <string name="delta">Delta</string>
+    <string name="add_preset">Add Preset</string>
 </resources>

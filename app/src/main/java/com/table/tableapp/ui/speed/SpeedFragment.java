@@ -16,6 +16,8 @@ import com.table.tableapp.connection.PathRequest;
 import com.table.tableapp.connection.SeekBarWrapper;
 import org.json.JSONException;
 
+import java.util.concurrent.TimeUnit;
+
 public class SpeedFragment extends Fragment {
 
     private SpeedViewModel speedViewModel;
@@ -110,12 +112,36 @@ public class SpeedFragment extends Fragment {
                 })
         );
 
+        AppCompatSeekBar delta_slider = sliders.findViewById(R.id.delta_slider);
+        delta_slider.setOnSeekBarChangeListener(
+                pr.createSeekBarChangeListener("speed", "delta", new SeekBarWrapper() {
+                    @Override
+                    public int convert(int value) {
+                        return value;
+                    }
+                    final TextView textView = root.findViewById(R.id.delta_text);
+                    @Override
+                    public void setText(Integer value) {
+                        if (value == null) {
+                            textView.setText("Delta");
+                        } else {
+                            textView.setText("Delta: " + convert(value));
+                        }
+                    }
+                })
+        );
+
         pr.makeJsonRequest("getSpeeds", response -> {
             try {
-                freq_slider.setProgress(response.getInt("freq"));
-                speed_slider.setProgress(response.getInt("speed"));
-                fps_slider.setProgress(response.getInt("fps"));
-                fade_slider.setProgress(response.getInt("fade"));
+                freq_slider.setProgress((int)(Math.sqrt(response.getInt("freq")) * Math.sqrt(freq_slider.getMax())));
+                {
+                    int value = response.getInt("speed");
+                    int calculated = (int) (Math.sqrt(Math.abs(value)) * Math.sqrt(speed_slider.getMax()));
+                    speed_slider.setProgress(value > 0 ? (speed_slider.getMax() / 2) + calculated : (speed_slider.getMax() / 2) - calculated);
+                }
+                fps_slider.setProgress(response.getInt("fps") - 1);
+                fade_slider.setProgress((int)(Math.sqrt(response.getInt("fade")) * Math.sqrt(freq_slider.getMax())));
+                //TODO: delta_slider.setProgress(response.getInt("delta"));
             } catch (JSONException e) {
                 // JSON Parsing error
             }

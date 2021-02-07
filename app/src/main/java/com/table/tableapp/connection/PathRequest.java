@@ -8,21 +8,28 @@ import androidx.appcompat.widget.AppCompatSeekBar;
 import com.android.volley.*;
 import com.android.volley.toolbox.*;
 import com.table.tableapp.R;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+
 public class PathRequest {
     private final RequestQueue queue;
-    private Context cont;
+    private final Context cont;
     public static final String host = "http://192.168.2.5/";
 
     // minimum delay between request
-    private static final long delay = 20;
+    private static final long delay = 25;
     private long time = System.currentTimeMillis();
+    private final ScheduledExecutorService executorService;
 
     public PathRequest(Context cont) {
         this.cont = cont;
         queue = Volley.newRequestQueue(cont);
+        executorService = Executors.newSingleThreadScheduledExecutor();
     }
 
     public void makeStringRequest(String path) {
@@ -62,27 +69,37 @@ public class PathRequest {
 
             @Override
             public void onStartTrackingTouch (SeekBar seekBar){
+                wrapper.setText(seekBar.getProgress());
             }
 
             @Override
             public void onStopTrackingTouch (SeekBar seekBar){
                 makeStringRequest(path + "?" + param + "=" + wrapper.convert(seekBar.getProgress()));
-                wrapper.setText(null);
+                executorService.schedule(() -> setWrapperFinalText(wrapper), 1, TimeUnit.SECONDS);
             }
         };
     }
 
-    public void createColorButtons(String path, CreateButtonWrapper wrapper) {
-        makeJsonArrayRequest(path, response -> {
+    private int parseJsonColor(JSONObject o) throws JSONException {
+        int r = o.getInt("r");
+        int g = o.getInt("g");
+        int b = o.getInt("b");
+        return Color.rgb(r, g, b);
+    }
+
+    private static void setWrapperFinalText(SeekBarWrapper wrapper) {
+        wrapper.setText(null);
+    }
+
+    public void createColorButtons(CreateButtonWrapper wrapper) {
+        makeJsonArrayRequest("getColorsArray", response -> {
             for (int i = 0; i < response.length(); i++) {
                 try {
                     JSONObject o = response.getJSONObject(i);
                     int id = o.getInt("id");
-                    int r = o.getInt("r");
-                    int g = o.getInt("g");
-                    int b = o.getInt("b");
-                    int color = Color.rgb(r, g, b);
-                    createBasicButton(id, color, wrapper);
+                    int color = parseJsonColor(o);
+                    Button button = createBasicButton(id + 1, wrapper);
+                    button.setBackgroundColor(color);
                 } catch (JSONException e) {
                     System.out.println("Json parsing error!");
                 }
@@ -90,22 +107,19 @@ public class PathRequest {
         });
     }
 
-    public void createBasicButton(int id, int color, CreateButtonWrapper wrapper) {
-        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
-        );
-        layoutParams.addRule(RelativeLayout.BELOW, wrapper.getLastId());
-        int left = (int)(cont.getResources().getDimension(R.dimen.button_side_margin));
-        int top =  (int)(cont.getResources().getDimension(R.dimen.button_top_margin));
-        int right = (int)(cont.getResources().getDimension(R.dimen.button_side_margin));
-        layoutParams.setMargins(left, top, right, 0);
+    public Button createBasicButton(int id, CreateButtonWrapper wrapper) {
         Button button = new Button(cont);
-        button.setId(id + 1);
-        button.setLayoutParams(layoutParams);
-        button.setBackgroundColor(color);
-        wrapper.setId(id);
-        wrapper.setLastId(button.getId());
+        button.setId(id);
+        wrapper.setLayoutParams(button);
         wrapper.setButtonCustomizations(button);
+        return button;
+    }
+
+    public void clearColors() {
+        makeJsonArrayRequest("getColorsArray", response -> {
+            for (int i = 0; i < response.length(); i++) {
+                makeStringRequest("color?del=true&id=" + 0);
+            }
+        });
     }
 }

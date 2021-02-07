@@ -27,7 +27,7 @@ public class Tab3Fragment extends ColorFragment {
 
     private void createDeleteColorButtons() {
         RelativeLayout layout = root.findViewById(R.id.delete_button_holder);
-        pr.createColorButtons("getColorsArray", new BasicCreateColorButton() {
+        pr.createColorButtons(new BasicCreateColorButton() {
             @Override
             public void setButtonCustomizations(Button button) {
                 button.setText("Delete Color: " + (button.getId() - 1));
