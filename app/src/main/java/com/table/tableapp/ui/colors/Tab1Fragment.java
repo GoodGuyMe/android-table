@@ -13,25 +13,32 @@ import com.skydoves.colorpickerview.listeners.ColorEnvelopeListener;
 import com.table.tableapp.R;
 import com.table.tableapp.connection.PathRequest;
 
-public class Tab1Fragment extends ColorFragment {
+public class Tab1Fragment extends BasicTabFragment {
 
     private PathRequest pr;
 
     @Override
+    protected void refreshButtons() {
+        // Do nothing!
+    }
+
+    @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_color_one, container, false);
+        root = inflater.inflate(R.layout.fragment_color_one, container, false);
         Button addColor = root.findViewById(R.id.addColorButton);
         addColor.setOnClickListener((V) -> createBuilder(root.getContext()).show());
 
         Button addRainbow = root.findViewById(R.id.add_color_rainbow);
-        addRainbow.setOnClickListener((V) -> pr.makeStringRequest("color?new=true&rgb=true"));
+        addRainbow.setOnClickListener((V) -> {
+            pr.makeConcurrentStringRequest("color?new=true&rgb=true", () -> refreshPage(root));
+        });
         pr = new PathRequest(root.getContext());
         return root;
     }
 
     private void setLayoutColor(ColorEnvelope envelope) {
         int[] argb = envelope.getArgb();
-        pr.makeStringRequest("color?new=true&r=" + argb[1] + "&g=" + argb[2] + "&b=" + argb[3]);
+        pr.makeConcurrentStringRequest("color?new=true&r=" + argb[1] + "&g=" + argb[2] + "&b=" + argb[3], () -> refreshPage(root));
     }
 
     private ColorPickerDialog.Builder createBuilder(Context context) {

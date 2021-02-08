@@ -48,21 +48,4 @@ public class ColorFragment extends Fragment {
 
         return root;
     }
-
-    public ColorPickerDialog.Builder createBasicBuilder(Context context) {
-        ColorPickerDialog.Builder builder = new ColorPickerDialog.Builder(new ContextThemeWrapper(context, R.style.AlertDialogTheme))
-                .setTitle(R.string.colorPickerTitle)
-                .setPreferenceName("MyColorPickerDialog")
-                .setNegativeButton(getString(R.string.cancel),
-                        (dialogInterface, i) -> dialogInterface.dismiss())
-                .attachAlphaSlideBar(false) // the default value is true.
-                .attachBrightnessSlideBar(true)  // the default value is true.
-                .setBottomSpace(12); // set a bottom space between the last slide bar and buttons.
-
-        ColorPickerView colorPickerView = builder.getColorPickerView();
-        BubbleFlag bubbleFlag = new BubbleFlag(context);
-        bubbleFlag.setFlagMode(FlagMode.FADE);
-        colorPickerView.setFlagView(bubbleFlag);
-        return builder;
-    }
 }

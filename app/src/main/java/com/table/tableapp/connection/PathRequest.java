@@ -2,13 +2,10 @@ package com.table.tableapp.connection;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.view.View;
 import android.widget.*;
 import androidx.appcompat.widget.AppCompatSeekBar;
 import com.android.volley.*;
 import com.android.volley.toolbox.*;
-import com.table.tableapp.R;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -35,6 +32,14 @@ public class PathRequest {
     public void makeStringRequest(String path) {
         String url = host + path;
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, null, error -> {
+            // Can't connect to table! // TODO: Add Snackbar
+        });
+        queue.add(stringRequest);
+    }
+
+    public void makeConcurrentStringRequest(String path, ConcurrentRequestWrapper wrapper) {
+        String url = host + path;
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, response -> wrapper.next(), error -> {
             // Can't connect to table! // TODO: Add Snackbar
         });
         queue.add(stringRequest);
@@ -115,12 +120,9 @@ public class PathRequest {
         return button;
     }
 
-    public void setNewColors(SetNewColorsWrapper wrapper) {
+    public void setNewColors(ConcurrentRequestWrapper last) {
         makeJsonArrayRequest("getColorsArray", response -> {
-            for (int i = 0; i < response.length(); i++) {
-                makeStringRequest("color?del=true&id=" + 0);
-            }
+            makeConcurrentStringRequest("color?del=true&all=true", last);
         });
-        wrapper.addNewColors();
     }
 }

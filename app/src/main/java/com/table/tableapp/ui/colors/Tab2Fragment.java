@@ -14,44 +14,51 @@ import com.skydoves.colorpickerview.listeners.ColorEnvelopeListener;
 import com.table.tableapp.R;
 import com.table.tableapp.connection.PathRequest;
 
-public class Tab2Fragment extends ColorFragment {
+public class Tab2Fragment extends BasicTabFragment {
 
-    private View root;
     private PathRequest pr;
+    private RelativeLayout layout;
+
+    @Override
+    protected void refreshButtons() {
+        if (layout != null) {
+            layout.removeAllViewsInLayout();
+            createColorButtons();
+        }
+    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_color_two, container, false);
         pr = new PathRequest(root.getContext());
+        layout = root.findViewById(R.id.edit_button_holder);
         createColorButtons();
 
         return root;
     }
 
     private void createColorButtons() {
-        RelativeLayout layout = root.findViewById(R.id.edit_button_holder);
         pr.createColorButtons(new BasicCreateColorButton() {
             @Override
             public void setButtonCustomizations(Button button) {
                 button.setText("Color: " + (button.getId() - 1));
                 button.setOnClickListener(view -> {
-                    createBuilder(root.getContext(), (button.getId() - 1), button).show(); // shows the dialog
+                    createBuilder(root.getContext(), (button.getId() - 1)).show(); // shows the dialog
                 });
                 layout.addView(button, button.getLayoutParams());
             }
         });
     }
 
-    private void setLayoutColor(ColorEnvelope envelope, int id, View button) {
+    private void setLayoutColor(ColorEnvelope envelope, int id) {
         int[] argb = envelope.getArgb();
-        pr.makeStringRequest("color?id=" + id + "&r=" + argb[1] + "&g=" + argb[2] + "&b=" + argb[3]);
-        button.setBackgroundColor(envelope.getColor());
+        pr.makeConcurrentStringRequest("color?id=" + id + "&r=" + argb[1] + "&g=" + argb[2] + "&b=" + argb[3], () -> refreshPage(root));
     }
 
-    private ColorPickerDialog.Builder createBuilder(Context context, int id, View button) {
+    private ColorPickerDialog.Builder createBuilder(Context context, int id) {
         return createBasicBuilder(context)
                 .setPositiveButton(getString(R.string.confirm),
-                        (ColorEnvelopeListener) (envelope, fromUser) -> setLayoutColor(envelope, id, button));
+                        (ColorEnvelopeListener) (envelope, fromUser) -> setLayoutColor(envelope, id));
     }
 
     @Override
