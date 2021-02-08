@@ -23,6 +23,10 @@ public class PathRequest {
     private long time = System.currentTimeMillis();
     private final ScheduledExecutorService executorService;
 
+    private void connectionError() {
+        Toast.makeText(cont, "Error connecting to table.", Toast.LENGTH_LONG).show();
+    }
+
     public PathRequest(Context cont) {
         this.cont = cont;
         queue = Volley.newRequestQueue(cont);
@@ -32,7 +36,8 @@ public class PathRequest {
     public void makeStringRequest(String path) {
         String url = host + path;
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, null, error -> {
-            // Can't connect to table! // TODO: Add Snackbar
+            // Can't connect to table!
+            connectionError();
         });
         queue.add(stringRequest);
     }
@@ -40,7 +45,8 @@ public class PathRequest {
     public void makeConcurrentStringRequest(String path, ConcurrentRequestWrapper wrapper) {
         String url = host + path;
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, response -> wrapper.next(), error -> {
-            // Can't connect to table! // TODO: Add Snackbar
+            // Can't connect to table!
+            connectionError();
         });
         queue.add(stringRequest);
     }
@@ -48,7 +54,8 @@ public class PathRequest {
     public void makeJsonRequest(String path, JsonRequestWrapper wrapper) {
         String url = host + path;
         JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.GET, url, null, wrapper::setResponse, error -> {
-            // Can't connect to table! // TODO: Add Snackbar
+            // Can't connect to table!
+            connectionError();
         });
         queue.add(jsonRequest);
     }

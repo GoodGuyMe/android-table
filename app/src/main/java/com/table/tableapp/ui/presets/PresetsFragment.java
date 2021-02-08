@@ -1,7 +1,6 @@
 package com.table.tableapp.ui.presets;
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.text.InputType;
@@ -9,10 +8,7 @@ import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.GridLayout;
-import android.widget.RelativeLayout;
+import android.widget.*;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import com.skydoves.colorpickerview.ColorPickerDialog;
@@ -36,8 +32,7 @@ public class PresetsFragment extends Fragment {
     private View root;
     private PathRequest pr;
     private File presets;
-
-    private static final int COLUMN_SIZE = 4;
+    private GridLayout layout;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -45,6 +40,7 @@ public class PresetsFragment extends Fragment {
         pr = new PathRequest(root.getContext());
 
         presets = new File(root.getContext().getFilesDir(), "presets.txt");
+        layout = root.findViewById(R.id.preset_button_holder);
         createAddPresetButton();
         createCustomPresetButtons();
 
@@ -97,6 +93,8 @@ public class PresetsFragment extends Fragment {
                                         FileOutputStream fOut = new FileOutputStream(presets);
                                         fOut.write(jsonArr.toString().getBytes(StandardCharsets.UTF_8));
                                         fOut.close();
+                                        layout.removeAllViewsInLayout();
+                                        createCustomPresetButtons();
                                     } catch (IOException | JSONException e) {
                                         e.printStackTrace();
                                     }
@@ -125,7 +123,6 @@ public class PresetsFragment extends Fragment {
     }
 
     private void createCustomPresetButtons() {
-        GridLayout layout = root.findViewById(R.id.preset_button_holder);
         try {
             JSONArray jsonArr = getPresetFromFile();
             for (int i = 0; i < jsonArr.length(); i++) {
@@ -137,6 +134,7 @@ public class PresetsFragment extends Fragment {
                             button.setText(preset.getString("title"));
                             button.setOnClickListener(view -> {
                                 try {
+                                    Toast.makeText(root.getContext(), "Changing to " + preset.getString("title") + "...", Toast.LENGTH_SHORT).show();
                                     String mode = preset.getString("mode");
                                     pr.makeStringRequest("mode?m=" + mode);
 
@@ -162,20 +160,18 @@ public class PresetsFragment extends Fragment {
                                     int delta = preset.getInt("delta");
 
                                     pr.makeStringRequest("speed?freq=" + freq + "&speed=" + speed + "&fade=" + fade + "&fps=" + fps + "&delta=" + delta);
-
-                                    int brightness = preset.getInt("brightness");
-                                    pr.makeStringRequest("brightness?b=" + brightness);
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
                             });
                             button.setOnLongClickListener(view -> {
-                                jsonArr.remove(button.getId() - 1);
                                 try {
+                                    Toast.makeText(root.getContext(), "Deleting preset " + preset.getString("title") + "...", Toast.LENGTH_SHORT).show();
+                                    jsonArr.remove(button.getId() - 1);
                                     FileOutputStream fOut = new FileOutputStream(presets);
                                     fOut.write(jsonArr.toString().getBytes(StandardCharsets.UTF_8));
                                     fOut.close();
-                                } catch (IOException e) {
+                                } catch (IOException | JSONException e) {
                                     e.printStackTrace();
                                 }
                                 layout.removeAllViewsInLayout();
