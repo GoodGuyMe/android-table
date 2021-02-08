@@ -178,7 +178,8 @@ public class PresetsFragment extends Fragment {
                                 } catch (IOException e) {
                                     e.printStackTrace();
                                 }
-                                ((ViewGroup) button.getParent()).removeView(button);
+                                layout.removeAllViewsInLayout();
+                                createCustomPresetButtons();
                                 return true;
                             });
                             button.setBackgroundTintList(ColorStateList.valueOf(preset.getInt("backgroundColor")));

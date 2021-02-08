@@ -43,7 +43,7 @@
             android:layout_marginTop="@dimen/inner_slider_distance"
             android:layout_marginStart="@dimen/button_side_margin"
             android:layout_marginEnd="@dimen/button_side_margin"
-            android:columnCount="3"
+            android:columnCount="2"
             android:orientation="horizontal"
             android:layout_below="@+id/text_presets"
             android:id="@+id/preset_button_holder">
