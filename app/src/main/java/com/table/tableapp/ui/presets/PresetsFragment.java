@@ -2,16 +2,24 @@ package com.table.tableapp.ui.presets;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.text.InputType;
+import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.GridLayout;
 import android.widget.RelativeLayout;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import com.skydoves.colorpickerview.ColorPickerDialog;
+import com.skydoves.colorpickerview.ColorPickerView;
+import com.skydoves.colorpickerview.flag.BubbleFlag;
+import com.skydoves.colorpickerview.flag.FlagMode;
+import com.skydoves.colorpickerview.listeners.ColorEnvelopeListener;
 import com.table.tableapp.R;
 import com.table.tableapp.connection.CreateButtonWrapper;
 import com.table.tableapp.connection.PathRequest;
@@ -65,30 +73,50 @@ public class PresetsFragment extends Fragment {
                 final EditText input = new EditText(root.getContext());
                 input.setInputType(InputType.TYPE_CLASS_TEXT);
                 builder.setView(input);
-                builder.setPositiveButton("OK", (dialog, which) -> {
+                builder.setPositiveButton(getString(R.string.confirm), (dialog, which) -> {
                     try {
                         String title = input.getText().toString();
                         response.put("title", title);
-                        //TODO: Let user pick button color
-                        JSONArray jsonArr;
-                        try {
-                            jsonArr = getPresetFromFile();
-                        } catch (FileNotFoundException | JSONException e) {
-                            jsonArr = new JSONArray();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                            return;
-                        }
+                        ColorPickerDialog.Builder colorBuilder = new ColorPickerDialog.Builder(new ContextThemeWrapper(root.getContext(), R.style.AlertDialogTheme))
+                                .setTitle(R.string.colorPickerTitle)
+                                .setPreferenceName("Pick a background color")
+                                .setPositiveButton(getString(R.string.confirm), (ColorEnvelopeListener) (envelope, fromUser) -> {
+                                    JSONArray jsonArr;
+                                    try {
+                                        jsonArr = getPresetFromFile();
+                                    } catch (FileNotFoundException | JSONException e) {
+                                        jsonArr = new JSONArray();
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                        return;
+                                    }
+                                    try {
+                                        response.put("backgroundColor", envelope.getColor());
+                                        jsonArr.put(response);
 
-                        jsonArr.put(response);
-                        FileOutputStream fOut = new FileOutputStream(presets);
-                        fOut.write(jsonArr.toString().getBytes(StandardCharsets.UTF_8));
-                        fOut.close();
-                    } catch (JSONException | IOException e) {
+                                        FileOutputStream fOut = new FileOutputStream(presets);
+                                        fOut.write(jsonArr.toString().getBytes(StandardCharsets.UTF_8));
+                                        fOut.close();
+                                    } catch (IOException | JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                })
+                                .setNegativeButton(getString(R.string.cancel),
+                                        (dialogInterface, i) -> dialogInterface.dismiss())
+                                .attachAlphaSlideBar(true) // the default value is true.
+                                .attachBrightnessSlideBar(true)  // the default value is true.
+                                .setBottomSpace(12); // set a bottom space between the last slide bar and buttons.
+
+                        ColorPickerView colorPickerView = colorBuilder.getColorPickerView();
+                        BubbleFlag bubbleFlag = new BubbleFlag(root.getContext());
+                        bubbleFlag.setFlagMode(FlagMode.FADE);
+                        colorPickerView.setFlagView(bubbleFlag);
+                        colorBuilder.show();
+                    } catch (JSONException e) {
                         e.printStackTrace();
                     }
                 });
-                builder.setNegativeButton("Cancel", (dialog, which) -> {
+                builder.setNegativeButton(R.string.cancel, (dialog, which) -> {
                     dialog.cancel();
                 });
                 builder.show();
@@ -97,7 +125,7 @@ public class PresetsFragment extends Fragment {
     }
 
     private void createCustomPresetButtons() {
-        RelativeLayout layout = root.findViewById(R.id.preset_button_holder);
+        GridLayout layout = root.findViewById(R.id.preset_button_holder);
         try {
             JSONArray jsonArr = getPresetFromFile();
             for (int i = 0; i < jsonArr.length(); i++) {
@@ -153,6 +181,7 @@ public class PresetsFragment extends Fragment {
                                 ((ViewGroup) button.getParent()).removeView(button);
                                 return true;
                             });
+                            button.setBackgroundTintList(ColorStateList.valueOf(preset.getInt("backgroundColor")));
                             layout.addView(button);
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -161,30 +190,10 @@ public class PresetsFragment extends Fragment {
 
                     @Override
                     public void setLayoutParams(Button button) {
-                        int id = button.getId();
                         RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
                                 (int)(button.getContext().getResources().getDimension(R.dimen.square_button_size)),
                                 (int)(button.getContext().getResources().getDimension(R.dimen.square_button_size))
                         );
-                        int left, right, top;
-                        if (id == 1) {
-                            layoutParams.addRule(RelativeLayout.BELOW, R.id.preset_button_holder);
-                        }
-                        else if (id <= COLUMN_SIZE) {
-                            layoutParams.addRule(RelativeLayout.BELOW, id - 1);
-                        } else if (id == COLUMN_SIZE + 1) {
-                            layoutParams.addRule(RelativeLayout.RIGHT_OF, 1);
-                            layoutParams.addRule(RelativeLayout.BELOW, R.id.preset_button_holder);
-                        } else {
-                            layoutParams.addRule(RelativeLayout.RIGHT_OF, id - COLUMN_SIZE);
-                            layoutParams.addRule(RelativeLayout.BELOW, id - 1);
-                        }
-
-                        left = (int)(button.getContext().getResources().getDimension(R.dimen.button_side_margin));
-                        top =  (int)(button.getContext().getResources().getDimension(R.dimen.button_top_margin));
-                        right = (int)(button.getContext().getResources().getDimension(R.dimen.button_side_margin));
-
-                        layoutParams.setMargins(left, top, right, 0);
                         button.setLayoutParams(layoutParams);
                     }
                 });

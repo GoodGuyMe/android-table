@@ -10,6 +10,7 @@
         android:id="@+id/preset_holder"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="?attr/actionBarSize"
         android:paddingStart="0dp"
         android:paddingTop="0dp"
         android:paddingEnd="0dp">
@@ -22,11 +23,31 @@
             android:id="@+id/add_preset_button">
 
         </Button>
-        <RelativeLayout
+
+        <TextView
+            android:id="@+id/text_presets"
+            android:text="@string/color_presets"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/add_preset_button"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="@dimen/inner_slider_distance"
+            android:layout_marginEnd="0dp"
+            android:textAlignment="center"
+            android:textSize="20sp" />
+        <GridLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/inner_slider_distance"
+            android:layout_marginStart="@dimen/button_side_margin"
+            android:layout_marginEnd="@dimen/button_side_margin"
+            android:columnCount="3"
+            android:orientation="horizontal"
+            android:layout_below="@+id/text_presets"
             android:id="@+id/preset_button_holder">
 
-        </RelativeLayout>
+        </GridLayout>
     </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
